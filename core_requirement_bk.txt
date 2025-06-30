@@ -5,8 +5,9 @@ evaluate==0.4.0
 Faker==18.11.2
 openai==0.27.2
 optimum==1.9.1
-ray
+ray==2.5.1
 tiktoken==0.4.0
-tokenizers
-torchtext
-transformers>=4.35.0
+tokenizers==0.13.2
+torch==2.0.1
+torchtext==0.15.2
+transformers==4.29.2

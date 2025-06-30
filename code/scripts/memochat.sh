@@ -1,5 +1,6 @@
 export GLOO_SOCKET_IFNAME=eth0
 export WANDB_MODE=disabled
+export GPU_NUM_PER_NODE=1
 
 maindir=$1
 datadir=${maindir}data
@@ -7,7 +8,8 @@ codedir=${maindir}code
 
 test_data=${datadir}/mtbenchplus/mtbenchplus.json
 
-settings=("1k", "10k")
+# settings=("1k", "10k")
+settings=("1k")
 models=("t5-3b" "vicuna-7b" "vicuna-13b" "vicuna-33b")
 
 for model in "${models[@]}"
@@ -30,5 +32,7 @@ for model in "${models[@]}"
             --num-gpus $GPU_NUM_PER_NODE \
             --ray-num-gpus ${RAYGPUS} \
             --prompt-path ${datadir}/prompts.json
+        break
         done
+    break
     done

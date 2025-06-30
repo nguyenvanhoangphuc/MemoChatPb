@@ -163,6 +163,7 @@ def run_retrieval(history, model_path, model, tokenizer, memo, local_check, bot_
 @torch.inference_mode()
 def get_model_answers(model_path, num_gpus, local_check, load_in_8bit, ques_jsons, prompts):
     model_path = os.path.expanduser(model_path)
+    print("Model path:", model_path)
     tokenizer = AutoTokenizer.from_pretrained(model_path, use_fast=False, truncation_side='left')
 
     if not local_check:
@@ -242,6 +243,7 @@ def get_model_answers(model_path, num_gpus, local_check, load_in_8bit, ques_json
         output_data.append(d)
     return output_data
 
+# model, số gpu, 
 def run_eval(model_path, num_gpus, local_check, load_in_8bit, question_file, ray_num_gpus, answer_file, prompt_path):
     assert num_gpus % ray_num_gpus == 0
     prompts = json.load(open(prompt_path, "r"))
