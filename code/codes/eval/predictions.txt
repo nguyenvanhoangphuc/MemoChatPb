@@ -1,0 +1,3 @@
+Paris is the capital of France.
+Machine learning allows machines to learn using datasets.
+Ray provides a way to run Python in parallel.

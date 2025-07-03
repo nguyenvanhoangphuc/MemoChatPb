@@ -8,6 +8,9 @@ import re
 import ray
 import warnings
 from random import sample
+import signal
+import sys
+from tqdm import tqdm
 warnings.filterwarnings("ignore")
 
 q_pre = "<s>\n"
@@ -160,10 +163,12 @@ def run_retrieval(history, model_path, model, tokenizer, memo, local_check, bot_
     bot_thinking["retrieval"] = {"input": qs, "output": outputs}
     return history, bot_thinking
 
+# model, số gpu, local_check, load_in_8bit, câu hỏi, prompts
 @torch.inference_mode()
 def get_model_answers(model_path, num_gpus, local_check, load_in_8bit, ques_jsons, prompts):
     model_path = os.path.expanduser(model_path)
     print("Model path:", model_path)
+    # load tokenizer
     tokenizer = AutoTokenizer.from_pretrained(model_path, use_fast=False, truncation_side='left')
 
     if not local_check:
@@ -173,6 +178,7 @@ def get_model_answers(model_path, num_gpus, local_check, load_in_8bit, ques_json
         gpu_memory_dict = {i: str(int(available_gpu_memory[i] * 0.85)) + "GiB" for i in range(num_gpus)}
         gpu_memory_dict["cpu"] = "0GiB"
 
+        # load model phân biệt giữa t5 và llama
         if "t5" in model_path:
             model = AutoModelForSeq2SeqLM.from_pretrained(
                 model_path, torch_dtype=torch.float16, device_map="auto", max_memory=gpu_memory_dict, load_in_8bit=load_in_8bit
@@ -233,6 +239,8 @@ def get_model_answers(model_path, num_gpus, local_check, load_in_8bit, ques_json
                 qs = q_pre + system_insturction + task_case + task_instruction + qa_link
                 outputs = gen_model_output(model_path, model, tokenizer, qs, local_check, "chatting_dialogsum")
                 outputs = normalize_chatting_outputs(outputs)
+
+                # update history
                 history["Recent Dialogs"] += [user, "bot: " + outputs]
                 print("bot: " + outputs + "\n")
                 print("=" * 20 + "end of turn {}".format(l_i // 2 + 1) + "=" * 20)
@@ -243,9 +251,11 @@ def get_model_answers(model_path, num_gpus, local_check, load_in_8bit, ques_json
         output_data.append(d)
     return output_data
 
-# model, số gpu, 
+# model, số gpu, local_check, load_in_8bit, câu hỏi, số gpu ray, file trả lời, đường dẫn prompt
 def run_eval(model_path, num_gpus, local_check, load_in_8bit, question_file, ray_num_gpus, answer_file, prompt_path):
+    # số lượng GPU ray phải chia hết cho số lượng GPU
     assert num_gpus % ray_num_gpus == 0
+    # load prompts từ file MemoChat/data/prompts.json
     prompts = json.load(open(prompt_path, "r"))
 
     # split question file into num_gpus files

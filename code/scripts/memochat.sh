@@ -8,7 +8,7 @@ codedir=${maindir}code
 
 test_data=${datadir}/mtbenchplus/mtbenchplus.json
 
-# settings=("1k", "10k")
+# settings=("1k" "10k")
 settings=("1k")
 models=("t5-3b" "vicuna-7b" "vicuna-13b" "vicuna-33b")
 
