@@ -120,4 +120,4 @@ def evaluate_metrics(gt_file, pred_file, ks=[1, 3, 5]):
 
 # Ví dụ gọi hàm
 # evaluate_metrics('/home/hoangphuc/MemoChat/code/codes/eval/ground_truth.json', '/home/hoangphuc/MemoChat/code/codes/eval/model_output.json', ks=[1, 3, 5])
-evaluate_metrics('/home/hoangphuc/MemoChat/data/locomo/memochat_locomo10.json', '/home/hoangphuc/MemoChat/data/locomo/locomo_testing/locomo_temp_qwen-memochat.json', ks=[1, 3, 5])
+evaluate_metrics('/home/hoangphuc/MemoChat/data/locomo/memochat_locomo10.json', '/home/hoangphuc/MemoChat/data/locomo/locomo_testing/locomo_temp_qwen-memochat.json', ks=[100])

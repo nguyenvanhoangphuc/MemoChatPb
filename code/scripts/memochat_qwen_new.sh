@@ -13,7 +13,7 @@ for qwen_setting in "${qwen_settings[@]}"
         ${datadir}/locomo/memochat_locomo10_root.json \
         /home/trungquang/LLM_models/Qwen/Qwen2.5-14B-Instruct-GPTQ-Int4 \
         EMPTY \
-        ${datadir}/locomo/locomo_testing/locomo_temp_qwen-${qwen_setting}.json \
+        ${datadir}/locomo/locomo_testing/locomo_0307_qwen-${qwen_setting}.json \
         ${datadir}/prompts.json
     done
 

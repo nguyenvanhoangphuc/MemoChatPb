@@ -271,7 +271,8 @@ def run_eval():
                 bot_thinking["answer"] = {"related_dialogs": [history["Related Dialogs"][r_tsd_i]
                             for r_tsd_i in range(len(history["Related Topics"]))],
                             "recent_dialogs": history["Recent Dialogs"]}
-                new_d["conversations"][l_i]["thinking"] = json.dumps(bot_thinking, ensure_ascii=False)
+                # new_d["conversations"][l_i]["thinking"] = json.dumps(bot_thinking, ensure_ascii=False)
+                new_d["conversations"][l_i]["thinking"] = bot_thinking
                 new_d["conversations"][l_i]["value"] = outputs
                 # sys.exit(0)  # Dừng lại để kiểm tra outputs
 

@@ -28,7 +28,7 @@ for model in "${models[@]}"
         python3 ${codedir}/codes/eval/get_model_infer_memochat_new.py \
             --model-path ${finetuned_model_path} \
             --question-file ${test_data} \
-            --answer-file ${datadir}/locomo/locomo_testing/locomo_testing_${model}_${setting}.json \
+            --answer-file ${datadir}/locomo/locomo_testing/locomo_testing_${model}_${setting}_2.json \
             --num-gpus $GPU_NUM_PER_NODE \
             --ray-num-gpus ${RAYGPUS} \
             --prompt-path ${datadir}/prompts.json

@@ -1,4 +1,6 @@
+transformers<4.49
 accelerate
+sentencepiece
 datasets
 deepspeed
 evaluate
@@ -10,7 +12,6 @@ tiktoken
 tokenizers
 torch
 torchtext
-transformers
 bert_score
 sacrebleu
 rouge_score
